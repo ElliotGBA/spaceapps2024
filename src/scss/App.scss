@@ -17,13 +17,29 @@
 }
 
 .App{
-    
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+
+
     &-header {
         font-family: "SupremeSpike";
         font-size: 100px;
+        color: #937EF6;
     }
     .intro {
         font-family: "FallingSky";
         font-size: $intro-font-size;
+        color: #CFB6E9;
+    }
+    button{
+        border: none;
+        background-color: #937EF6;
+        color: white;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 40px;
+        font-size: 25px;
+        width: 10em;
     }
 }
