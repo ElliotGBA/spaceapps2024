@@ -1,15 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { System } from "../classes/System";
 import { CelestialBody } from '../classes/CelestialBody';
 import planetData from "../data/startingPlanetData.json";
-
-/**
- * timeStep is the 
- * 1.397 = 1 day / frame
- * 0.058 = 1 hour / frame
- * 9.779 = 1 week / frame
- */
-let timeStep = 0.058; // overall speed of orrery
+import "../scss/Orrery.scss";
 
 const createSolarSystem = () => {
     const SunData = planetData.sun;
@@ -46,9 +39,16 @@ const createSolarSystem = () => {
 }
 
 const Orrery = () => {
+    
     const canvasRef = useRef(null);
     const systemRef = useRef(createSolarSystem());
     const planetPathsRef = useRef([]);
+    /**
+     * timeStep is the time the simulation runs at
+     * 0.058 = 1 hour / frame
+     * 1.397 = 1 day / frame
+     */
+    const [timeStep, setTimeStep] = useState(1.397); // overall speed of orrery initalized at 0
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -118,11 +118,9 @@ const Orrery = () => {
                 ctx.font = '10px Arial';
                 ctx.textAlign = 'center';
                 ctx.fillText(body.name, planetX, planetY + planetRadius + 10);
-                //ctx.fillText(body.getPosition(), planetX, planetY + planetRadius + 20);
             });
         };
         
-    
         const animate = () => {
             system.updatePhysics(timeStep); // Update physics with a time step
             draw();
@@ -130,16 +128,43 @@ const Orrery = () => {
         };
     
         requestAnimationFrame(animate);
-    }, []);
-    
+    }, [timeStep]); // Re-run effect if timeStep changes
+
+    const handleTimeStepChange = (e) => {
+        setTimeStep(parseFloat(e.target.value));
+        const slider = e.target;
+        const min = parseFloat(slider.min);
+        const max = parseFloat(slider.max);
+        const value = ((slider.value - min) / (max - min)) * 100;
+        slider.style.setProperty('--value', `${value}%`);
+        setTimeStep(slider.value);
+    };
 
     return (
-        <canvas
-            ref={canvasRef}
-            width={window.innerWidth}
-            height={window.innerHeight}
-            style={{ display: 'block', backgroundColor: 'black' }}
-        />
+        <>
+            <canvas
+                ref={canvasRef}
+                width={window.innerWidth}
+                height={window.innerHeight}
+                style={{ display: 'block', backgroundColor: 'black' }}
+            />
+            <div className="sliderContainer">
+                <div className="timeStepLabel">{Math.floor(timeStep * 17.304)} hours/frame</div>
+                <input
+                    label="Time Step"
+                    type="range"
+                    min="-1.397" // max/min +-1 day per frame
+                    max="1.397"
+                    step="0.058"
+                    shiftStep="0.058" // 1 hour steps
+                    marks
+                    value={timeStep}
+                    onChange={handleTimeStepChange}
+                    className="timeStepSlider"
+                />
+            </div>
+            
+        </>
     );
 };
 
