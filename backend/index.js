@@ -18,8 +18,13 @@ server.get('/api', (req, res) => {
         params: req.query,
     })
     .then((response) => {
-        console.log(response.data.result);
+        console.log(response.data);
         res.send(response.data.result);
-    })
-    
-})
+    })   
+}
+
+
+
+
+)
+

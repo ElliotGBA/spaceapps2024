@@ -6,6 +6,9 @@ const getFromBackEnd = () => {
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
     const day = today.getDate();
+    /*data needed:
+        vX, vY, position (x, y);
+    */
     axios.get(url, {
         params: {
             format: "json",
@@ -13,11 +16,12 @@ const getFromBackEnd = () => {
             OBJ_DATA: "YES",
             MAKE_EPHEM: "YES",
             EPHEM_TYPE: "VECTORS",
-            START_TIME: `${year}-${month}-${day-1}`,
-            STOP_TIME: `${year}-${month}-${day}`
+            START_TIME: `${year-1}-${month}-${day}`,
+            STOP_TIME: `${year}-${month}-${day+4}`,
+            STEP_SIZE: "1d"
         },
     }).then((response) => {
-        console.log("Response from backend is: ", response)
+        console.log("Response from backend is: ", response.data)
     }).catch((error) => {
         console.error("error from backend is: ", error)
     })
