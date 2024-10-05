@@ -3,7 +3,7 @@ import { System } from "../classes/System";
 import { CelestialBody } from '../classes/CelestialBody';
 import planetData from "../data/startingPlanetData.json";
 
-let timeStep = 0.5; // speed of orrery
+let timeStep = 1; // speed of orrery
 
 const createSolarSystem = () => {
     const SunData = planetData.sun;
@@ -39,15 +39,18 @@ const createSolarSystem = () => {
     return solarSystem;
 }
 
-
 const Orrery = () => {
     const canvasRef = useRef(null);
     const systemRef = useRef(createSolarSystem());
+    const planetPathsRef = useRef([]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const system = systemRef.current;
+        
+        // Initialize paths for each planet
+        planetPathsRef.current = system.bodies.map(() => []);
 
         const draw = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -62,6 +65,27 @@ const Orrery = () => {
             ctx.fillStyle = system.centralBody.colour;
             ctx.fill();
             ctx.closePath();
+
+            // Draw the orbital paths
+            system.bodies.forEach((body, index) => {
+                const path = planetPathsRef.current[index];
+
+                // Add the current position to the path
+                const planetX = canvas.width / 2 + body.position.x / (index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
+                const planetY = canvas.height / 2 + body.position.y / (index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
+                path.push({ x: planetX, y: planetY });
+
+                // Draw the path
+                ctx.beginPath();
+                ctx.strokeStyle = body.colour;
+                ctx.lineWidth = 0.5;
+                for (let i = 0; i < path.length - 1; i++) {
+                    ctx.moveTo(path[i].x, path[i].y);
+                    ctx.lineTo(path[i + 1].x, path[i + 1].y);
+                }
+                ctx.stroke();
+                ctx.closePath();
+            });
 
             // Draw the planets
             system.bodies.forEach((body, index) => {
@@ -79,11 +103,10 @@ const Orrery = () => {
 
         const animate = () => {
             system.updatePhysics(timeStep); // Update physics with a time step
-            draw(); // Draw the updated positions
+            draw();
             requestAnimationFrame(animate); // Request next frame
         };
 
-        // Start the animation
         requestAnimationFrame(animate);
 
     }, []);
