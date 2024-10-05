@@ -7,7 +7,35 @@
 </head>
 <body>
     <h1>Planet Data Visualizer</h1>
+    <div>
+        <label for="planetSelect">Select Planet: </label>
+        <select id="planetSelect">
+            <option value="Sun">Sun</option>
+            <option value="Mercury">Mercury</option>
+            <option value="Venus">Venus</option>
+            <option value="Earth">Earth</option>
+            <option value="Mars">Mars</option>
+            <option value="Jupiter">Jupiter</option>
+            <option value="Saturn">Saturn</option>
+            <option value="Uranus">Uranus</option>
+            <option value="Neptune">Neptune</option>
+            <option value="Pluto">Pluto</option>
+        </select>
+    </div>
+    <div>
+        <label for="startDate">Start Date: </label>
+        <input type="date" id="startDate" />
+    </div>
+    <div>
+        <label for="endDate">End Date: </label>
+        <input type="date" id="endDate" />
+    </div>
+    <div>
+        <label for="timeStep">Time Step: </label>
+        <input type="text" id="timeStep" placeholder="e.g., 1d, 1h" />
+    </div>
+    <button id="fetchDataButton">Fetch Planet Data</button>
     <div id="planetData">Loading...data</div>
-    <script src="./src/jul.js"></script>
+    <script src="../src/jul.js"></script>
 </body>
 </html>
