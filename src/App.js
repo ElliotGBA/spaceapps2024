@@ -1,6 +1,8 @@
 import React from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import { AnimatedBackground } from 'animated-backgrounds';
+// import { useNavigate } from "react-router-dom";
 import "./scss/App.scss";
 
 import NavBar from "./Components/NavBar";
@@ -38,10 +40,19 @@ import Intro from "./Components/Intro";
 // }
 
 function App() {
+  // const navigate = useNavigate();
+  //   const handleClick = () => {
+  //       navigate("/");
+  //   };
   return(
     <div>
       <Router>
-                <div className="App">
+            <div className="App">
+              <div className="youniverse">
+                  <div><img src="https://img.freepik.com/free-vector/cute-helmet-astronaut-space-cartoon-vector-icon-illustration-science-technology-icon-isolated_138676-7378.jpg"></img></div>
+
+                      <h1>Welcome Youniversers!</h1>
+                  </div>
                     <NavBar />
                     <Routes>
                         <Route path="/" element={<Intro / >} />
@@ -50,8 +61,8 @@ function App() {
                         {/* <Route path="/More" element={<More />} /> */}
                     </Routes>
                     <Footer />
-                </div>
-            </Router>
+            </div>
+        </Router>
   </div>
 
 

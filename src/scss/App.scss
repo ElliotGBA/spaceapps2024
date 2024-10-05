@@ -20,6 +20,27 @@
     text-align: center;
     width: 100vw;
     height: 100vh;
+    .youniverse {
+        position: relative;  /* Relative positioning */
+        height: 50px;       /* Set a specific height for the header */
+        width: 100%;         /* Full width */
+        background: transparent;  /* Ensure background color doesn't affect the rest */
+        overflow: hidden;     /* If you want to hide any overflow from the animation */
+        background-image: url("../cosmicDust.png");
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            // width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+          
+      }
+      
 
 
     &-header {

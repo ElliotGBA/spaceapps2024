@@ -1,5 +1,9 @@
 .navbar {
-    displsy: flex;
-    min-wdith: 100%;
+    display: center;
+    min-width: 100%;
 
+}
+.navLinks ul li{
+    display: inline-block;
+    margin-right: 15px;
 }
