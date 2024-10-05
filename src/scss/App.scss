@@ -25,12 +25,28 @@
     &-header {
         font-family: "SupremeSpike";
         font-size: 100px;
-        color: #937EF6;
+        color: #668FFF;
+        text-shadow:
+        3px 3px 0 white,
+        2px 2px 10px rgba(255, 0, 128, 0.6), 
+        -2px -2px 15px rgba(30, 33, 253, 0.6),
+        2px -2px 12px rgba(170, 0, 255, 0.751),
+        -2px 2px 10px rgba(255, 0, 128, 0.6);
+    
     }
     .intro {
         font-family: "FallingSky";
         font-size: $intro-font-size;
-        color: #CFB6E9;
+        color: #62E5F5;
+    }
+    .ask {
+        color: #f8d092;
+        text-shadow:
+        2px 2px 10px rgba(255, 0, 128, 0.6), 
+        -2px -2px 10px rgba(253, 30, 30, 0.6),
+        2px -2px 10px rgba(145, 255, 0, 0.751),
+        -2px 2px 10px rgba(255, 0, 128, 0.6);
+
     }
     button{
         border: none;
