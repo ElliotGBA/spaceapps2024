@@ -1,0 +1,29 @@
+@import "./_variables";
+
+//for general uses
+@font-face {
+    font-family: "FallingSky";
+    src: url("../fonts/FallingSky.otf"); 
+    font-weight: normal; /* or bold, etc. */
+    font-style: normal; /* or italic, etc. */
+}
+
+//for headers and large text
+@font-face {
+    font-family: "SupremeSpike";
+    src: url("../fonts/SupremeSpike.otf"); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+.App{
+    
+    &-header {
+        font-family: "SupremeSpike";
+        font-size: 100px;
+    }
+    .intro {
+        font-family: "FallingSky";
+        font-size: $intro-font-size;
+    }
+}

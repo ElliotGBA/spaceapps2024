@@ -1,18 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
-import './App.css';
+import { AnimatedBackground } from 'animated-backgrounds';
+import "./scss/App.scss";
 
 function App() {
   return (
     <div className="App">
+      <AnimatedBackground animationName="starryNight" />
       <header className="App-header">
-        <h1>
           Welcome Youniversers!
-        </h1>
       </header>
       <main>
       <section id="content">
-        <p>
+        <p className="intro">
           Imagine this: You are a NASA Astronaut exploring the Milky Way in a spaceship. 
           You are tasked with exploring our solar system and getting information about it.
           If you answer the call, you will be enlightened beyond what you can imagine.
