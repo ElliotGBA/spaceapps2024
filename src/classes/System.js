@@ -11,14 +11,12 @@ class System {
     }
 
     addBody(celestialBody) {
-        if (typeof celestialBody != CelestialBody)  {
+        if (!(celestialBody instanceof CelestialBody))  {
             return;
         }
 
-        this.bodies = this.bodies.concat([body]);
+        this.bodies.push(celestialBody);
     }
-
-    
 
 }
 

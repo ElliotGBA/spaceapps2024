@@ -1,8 +1,7 @@
 import './App.css';
+import Orrery from "./components/Orrery";
 import "./classes/CelestialBody";
 import { BrowserRouter, Route, Routes, Router } from 'react-router-dom';
-
-import { CelestialBody } from './classes/CelestialBody';
 
 function App() {
 
@@ -22,7 +21,9 @@ function App() {
   const Placeholder = () => {
     return(
       <div>
-        This is a place holder :) 
+        <main>
+          <Orrery />
+        </main>
       </div>
     )
   }
