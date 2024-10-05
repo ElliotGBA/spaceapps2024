@@ -3,7 +3,7 @@ import { System } from "../classes/System";
 import { CelestialBody } from '../classes/CelestialBody';
 import planetData from "../data/startingPlanetData.json";
 
-let timeStep = 1; // speed of orrery
+let timeStep = 1; // overall speed of orrery
 
 const createSolarSystem = () => {
     const SunData = planetData.sun;
