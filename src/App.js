@@ -1,5 +1,6 @@
 import './App.css';
 import Orrery from "./components/Orrery";
+import TestBackEnd from "./components/TestBackEnd";
 import "./classes/CelestialBody";
 import { BrowserRouter, Route, Routes, Router } from 'react-router-dom';
 
@@ -22,7 +23,7 @@ function App() {
     return(
       <div>
         <main>
-          <Orrery />
+        <p>This is a placeholder (^_^)</p>
         </main>
       </div>
     )
@@ -35,10 +36,11 @@ function App() {
         <Routes>
           
         {/* intro page:*/}<Route index path="/" element={<Placeholder/>}/> 
-          <Route path="/home" element={<Placeholder/>}/>
-          <Route path="simulation" element={<Placeholder/>}/>
-          <Route path="details:name" element={<Placeholder/>}/>
-          <Route path="quiz:name" element={<Placeholder/>}/>
+          <Route path="/home" element={<Orrery/>}/>
+          <Route path="/simulation" element={<Placeholder/>}/>
+          <Route path="/details:name" element={<Placeholder/>}/>
+          <Route path="/quiz:name" element={<Placeholder/>}/>
+          <Route path="/testBackend" element={<TestBackEnd/>}/>
           {/*<Route path="extraInfo:name"/> */}
           <Route path="*" element={<Placeholder/>}/>
         </Routes>
