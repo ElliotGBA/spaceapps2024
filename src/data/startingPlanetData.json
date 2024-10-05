@@ -1,0 +1,77 @@
+{
+    "sun": {
+      "name": "Sun",
+      "mass": 1.989e30,
+      "position": { "x": 0, "y": 0 },
+      "velocity": { "vx": 0, "vy": 0 },
+      "radius": 696340,
+      "color": "#FFD700"
+    },
+    "planets": [
+      {
+        "name": "Mercury",
+        "mass": 3.285e23,
+        "position": { "x": 57909050, "y": 0 },
+        "velocity": { "vx": 0, "vy": 47.87 },
+        "radius": 2439.7,
+        "color": "#A9A9A9"
+      },
+      {
+        "name": "Venus",
+        "mass": 4.867e24,
+        "position": { "x": 108208000, "y": 0 },
+        "velocity": { "vx": 0, "vy": 35.02 },
+        "radius": 6051.8,
+        "color": "#EEDC82"
+      },
+      {
+        "name": "Earth",
+        "mass": 5.972e24,
+        "position": { "x": 149598023, "y": 0 },
+        "velocity": { "vx": 0, "vy": 29.78 },
+        "radius": 6371,
+        "color": "#1E90FF"
+      },
+      {
+        "name": "Mars",
+        "mass": 6.39e23,
+        "position": { "x": 227939200, "y": 0 },
+        "velocity": { "vx": 0, "vy": 24.07 },
+        "radius": 3389.5,
+        "color": "#FF4500"
+      },
+      {
+        "name": "Jupiter",
+        "mass": 1.898e27,
+        "position": { "x": 778340821, "y": 0 },
+        "velocity": { "vx": 0, "vy": 13.07 },
+        "radius": 69911,
+        "color": "#FFA500"
+      },
+      {
+        "name": "Saturn",
+        "mass": 5.683e26,
+        "position": { "x": 1426666422, "y": 0 },
+        "velocity": { "vx": 0, "vy": 9.69 },
+        "radius": 58232,
+        "color": "#F5DEB3"
+      },
+      {
+        "name": "Uranus",
+        "mass": 8.681e25,
+        "position": { "x": 2870658186, "y": 0 },
+        "velocity": { "vx": 0, "vy": 6.81 },
+        "radius": 25362,
+        "color": "#AFEEEE"
+      },
+      {
+        "name": "Neptune",
+        "mass": 1.024e26,
+        "position": { "x": 4498396441, "y": 0 },
+        "velocity": { "vx": 0, "vy": 5.43 },
+        "radius": 24622,
+        "color": "#4682B4"
+      }
+    ]
+  }
+  
