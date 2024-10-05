@@ -16,8 +16,8 @@ const getFromBackEnd = () => {
             OBJ_DATA: "YES",
             MAKE_EPHEM: "YES",
             EPHEM_TYPE: "VECTORS",
-            START_TIME: `${year-1}-${month}-${day}`,
-            STOP_TIME: `${year}-${month}-${day+4}`,
+            START_TIME: `${year}-${month}-${day}`,
+            STOP_TIME: `${year}-${month}-${day+1}`,
             STEP_SIZE: "1d"
         },
     }).then((response) => {

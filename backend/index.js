@@ -18,13 +18,18 @@ server.get('/api', (req, res) => {
         params: req.query,
     })
     .then((response) => {
-        console.log(response.data);
-        res.send(response.data.result);
+        const data = response.data.result;
+        const vectors = data.split("\n").filter((line) => containsStuff(line));
+        console.log(vectors[0]);
+        res.send(vectors);
     })   
+}
+)
+
+const containsStuff = (line) => {
+    return line.toLowerCase().includes( "vx=") || line.toLowerCase().includes("x =");
 }
 
 
 
-
-)
 
