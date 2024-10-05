@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { System } from "../classes/System";
 import { CelestialBody } from '../classes/CelestialBody';
 import planetData from "../data/startingPlanetData.json";
 
-const createSolarSystem = () => {
+let timeStep = 0.5; // speed of orrery
 
+const createSolarSystem = () => {
     const SunData = planetData.sun;
     const Sun = new CelestialBody(
         SunData.mass,
         SunData.position,
         SunData.velocity,
-        { x: 0, y: 0}, // initial acceleration is 0
+        { x: 0, y: 0 }, // initial acceleration is 0
         SunData.radius,
         SunData.color,
         SunData.name,
         SunData.velocity,
     );
 
-    const solarSystem = new System(Sun); // initailize the solar system around the sun
+    const solarSystem = new System(Sun); // Initialize the solar system around the sun
 
     planetData.planets.forEach((planet) => {
         const newPlanet = new CelestialBody(
             planet.mass,
             planet.position,
-            planet.velocity,
+            { x: 0, y: 0 }, // Initial velocity is set later
             { x: 0, y: 0 },
             planet.radius,
             planet.color,
@@ -33,56 +34,68 @@ const createSolarSystem = () => {
         solarSystem.addBody(newPlanet);
     });
 
+    solarSystem.setInitialOrbitalVelocities(); // Set initial velocities for orbital movement
+
     return solarSystem;
 }
 
-const Orrery = () => {
 
-    const [system, setSystem] = useState(null);
+const Orrery = () => {
+    const canvasRef = useRef(null);
+    const systemRef = useRef(createSolarSystem());
 
     useEffect(() => {
-        const initailizedSystem = createSolarSystem();
-        console.log(initailizedSystem);
-        setSystem(initailizedSystem);
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const system = systemRef.current;
+
+        const draw = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the Sun
+            const sunX = canvas.width / 2;
+            const sunY = canvas.height / 2;
+            const sunRadius = system.centralBody.radius / 50000;
+
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, sunRadius, 0, 2 * Math.PI);
+            ctx.fillStyle = system.centralBody.colour;
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw the planets
+            system.bodies.forEach((body, index) => {
+                const planetX = canvas.width / 2 + body.position.x / (index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
+                const planetY = canvas.height / 2 + body.position.y / (index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
+                const planetRadius = body.radius / (index < 4 ? 1000 : 5000);
+
+                ctx.beginPath();
+                ctx.arc(planetX, planetY, planetRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = body.colour;
+                ctx.fill();
+                ctx.closePath();
+            });
+        };
+
+        const animate = () => {
+            system.updatePhysics(timeStep); // Update physics with a time step
+            draw(); // Draw the updated positions
+            requestAnimationFrame(animate); // Request next frame
+        };
+
+        // Start the animation
+        requestAnimationFrame(animate);
+
     }, []);
 
     return (
-        <div id="orrery" style={{ position: 'relative', width: '100vw', height: '100vh' }}>
-            {system && (
-                <>
-                    {/* Render the Sun (centralBody) */}
-                    <div style={{
-                        position: 'absolute',
-                        left: `calc(50% + ${system.centralBody.position.x / 10000000}px)`, // Center + scaled position
-                        top: `calc(50% + ${system.centralBody.position.y / 10000000}px)`, // Center + scaled position
-                        width: `${system.centralBody.radius / 5000}px`,
-                        height: `${system.centralBody.radius / 5000}px`,
-                        backgroundColor: system.centralBody.colour,
-                        borderRadius: '50%',
-                        transform: 'translate(-50%, -50%)'
-                    }}>
-                        {system.centralBody.name}
-                    </div>
-    
-                    {/* Render the planets */}
-                    {system.bodies.map((body, index) => (
-                        <div key={index} style={{
-                            position: 'absolute',
-                            left: `calc(50% + ${body.position.x / 1000000}px)`, // Center + scaled position
-                            top: `calc(50% + ${body.position.y / 1000000}px)`, // Center + scaled position
-                            width: `${index < 4 ? body.radius / 200 : body.radius / 700}px`, // Make the last 4 planets smaller
-                            height: `${index < 4 ? body.radius / 200 : body.radius / 700}px`, // Make the last 4 planets smaller
-                            backgroundColor: body.colour,
-                            borderRadius: '50%',
-                            transform: 'translate(-50%, -50%)'
-                        }}>
-                            {body.name}
-                        </div>
-                    ))}
-                </>
-            )}
-        </div>
+        <canvas
+            ref={canvasRef}
+            width={window.innerWidth}
+            height={window.innerHeight}
+            style={{ display: 'block', backgroundColor: 'black' }}
+        />
     );
 };
 
-export default Orrery
+export default Orrery;
