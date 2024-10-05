@@ -3,7 +3,13 @@ import { System } from "../classes/System";
 import { CelestialBody } from '../classes/CelestialBody';
 import planetData from "../data/startingPlanetData.json";
 
-let timeStep = 1; // overall speed of orrery
+/**
+ * timeStep is the 
+ * 1.397 = 1 day / frame
+ * 0.058 = 1 hour / frame
+ * 9.779 = 1 week / frame
+ */
+let timeStep = 0.058; // overall speed of orrery
 
 const createSolarSystem = () => {
     const SunData = planetData.sun;
