@@ -6,6 +6,7 @@ import "../scss/Orrery.scss";
 import TimeControlButtons from './TimeControlButtons';
 
 const createSolarSystem = () => {
+
     const SunData = planetData.sun;
     const Sun = new CelestialBody(
         SunData.mass,
@@ -69,7 +70,7 @@ const Orrery = () => {
             // Update display properties based on index for scaling
             system.bodies.forEach((body, index) => {
                 //body.updateDisplayProperties(index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
-                body.updateDisplayProperties(1000000);
+                body.updateDisplayProperties(index < 4 ? 2500000 : (index < 6 ? 6000000 : 8000000));
             });
     
             // Draw the Sun
@@ -132,6 +133,32 @@ const Orrery = () => {
             draw();
             frameIdRef.current = requestAnimationFrame(animate);
         };
+
+        const handleCanvasClick = (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = (event.clientX - rect.left) * dpr;
+            const mouseY = (event.clientY - rect.top) * dpr;
+            const sunX = canvas.width / (2 * dpr);
+            const sunY = canvas.height / (2 * dpr);
+
+            // Check if Sun is clicked
+            const sunRadius = system.centralBody.displayRadius / 50000;
+            const distToSun = Math.sqrt((mouseX - sunX) ** 2 + (mouseY - sunY) ** 2);
+            if (distToSun <= sunRadius) {
+                console.log(`Clicked on ${system.centralBody.name}`);
+            }
+
+            // Check if any planet is clicked
+            system.bodies.forEach((body) => {
+                const planetX = sunX + body.displayPosition.x;
+                const planetY = sunY + body.displayPosition.y;
+                const planetRadius = body.displayRadius / 1000;
+                const distance = Math.sqrt((mouseX - planetX) ** 2 + (mouseY - planetY) ** 2);
+                if (distance <= planetRadius) {
+                    console.log(`Clicked on ${body.name}`);
+                }
+            });
+        };
     
         frameIdRef.current = requestAnimationFrame(animate);
     
@@ -144,6 +171,15 @@ const Orrery = () => {
 
     const togglePause = () => {
         setIsPaused((prev) => !prev);
+    };
+
+    const changeBodyMass = (bodyName, newMass) => {
+        const system = systemRef.current;
+        const body = system.bodies.find((b) => b.name === bodyName);
+        if (body) {
+            body.setMass(newMass);
+            console.log(`${body.name} mass updated to ${newMass}`);
+        }
     };
 
     return (
@@ -162,7 +198,7 @@ const Orrery = () => {
                     isPaused={isPaused}
                 />
             </div>
-            
+            {/*<button onClick={() => changeBodyMass("Earth", 6e28)}>Change Earth's Mass</button>*/}
         </>
     );
 };

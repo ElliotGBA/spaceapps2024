@@ -22,7 +22,7 @@ class CelestialBody {
             x: this.position.x / scaleFactor,
             y: this.position.y / scaleFactor,
         };
-        this.displayRadius = this.radius / (scaleFactor / 100000);
+        this.displayRadius = this.radius / (scaleFactor / 1500000);
     }
 
     getPosition() {
@@ -34,6 +34,10 @@ class CelestialBody {
         this.position.x += this.velocity.vx * dt + 0.5 * this.acceleration.x * dt * dt;
         this.position.y += this.velocity.vy * dt + 0.5 * this.acceleration.y * dt * dt;
 
+    }
+
+    setMass(newMass) {
+        this.mass = newMass;
     }
     
 }
