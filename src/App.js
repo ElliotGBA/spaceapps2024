@@ -1,14 +1,66 @@
+import './App.css';
+// import Orrery from "./Components/Orrery";
+import "./classes/CelestialBody";
 import React from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AnimatedBackground } from 'animated-backgrounds';
-import { useNavigate } from "react-router-dom";
+// import { AnimatedBackground } from 'animated-backgrounds';
+// import { useNavigate } from "react-router-dom";
 import "./scss/App.scss";
 
-import NavBar from "./Components/NavBar";
-import Footer from "./Components/Footer";
+// import NavBar from "./Components/NavBar";
+// import Footer from "./Components/Footer";
 import Home from "./Components/Home";
 import Intro from "./Components/Intro";
+
+function App() {
+
+  //const sun = new CelestialBody("Sun", 420, 69)
+/**
+ * Pages:
+ * 
+ * intro page
+ * homepage (orrery)
+ * interactive page
+ * learn more (planet)
+ * quiz page
+ * maybe (learn even more)
+ */
+
+  // temp component for routing, replace with actual ones:
+  const Placeholder = () => {
+    return(
+      <div>
+        <main>
+          {/* <Orrery /> */}
+        </main>
+      </div>
+    )
+  }
+ 
+
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+        
+          <Route path="/" element={<Intro />} />
+          <Route path="/Home" element={<Home />} />
+                  {/* intro page:<Route index path="/" element={<Placeholder/>}/> 
+                  <Route path="/home" element={<Placeholder/>}/>
+          <Route path="simulation" element={<Placeholder/>}/>
+          <Route path="details:name" element={<Placeholder/>}/>
+          <Route path="quiz:name" element={<Placeholder/>}/>
+          {/*<Route path="extraInfo:name"/> */}
+          {/*<Route path="*" element={<Placeholder/>}/> */}
+
+
+        </Routes>
+      </Router>
+      </div>
+    
+ ) };
+
 
 // function Home() {
 //     const navigate = useNavigate();
@@ -71,16 +123,7 @@ import Intro from "./Components/Intro";
             // </div>
 //   );
 // }
-function App(){
-  return(
-    <Router>
-      <Routes>
-        <Route path="/" element={<Intro />} />
-        <Route path="/Home" element={<Home />} />
-      </Routes>
-    </Router>
-  );
-}
+
 
 export default App;
 

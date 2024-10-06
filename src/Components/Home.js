@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
+import Orrery from "./Orrery";
 import "../scss/App.scss";
 
 function Home() {
@@ -15,8 +16,7 @@ function Home() {
                 <h1>Welcome Youniversers!</h1>
             </div>
             <NavBar />
-            <p>Content being here!</p>
-            <br></br>
+            <Orrery />
             <Footer />
         </div>
     );
