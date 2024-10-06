@@ -29,3 +29,6 @@ This project is the collaborative effort of a talented team of developers:
 ## Educational Purpose
 
 The Solar System Simulator is not just a tool for entertainment; it serves as an educational resource that fosters a greater appreciation for the complexity and beauty of our solar system. By allowing users to manipulate and observe various factors that influence celestial mechanics, the simulator helps illustrate the delicate balance that keeps our planet, and others, in their respective orbits around the Sun.
+
+## Demo Available
+At: https://youniverse2024.netlify.app/
