@@ -12,8 +12,8 @@ This project is the collaborative effort of a talented team of developers:
 
 - **Malk Daboor**
 - **Michael Mroz**
-- **Phuong Pham**
-- **Truc Tran**
+- **Julia Pham**
+- **Ella Tran**
 - **Elliot Boutilier-Anderson**
 
 ## Features
