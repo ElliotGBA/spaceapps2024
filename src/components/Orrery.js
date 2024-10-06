@@ -44,7 +44,8 @@ const Orrery = () => {
     const systemRef = useRef(createSolarSystem());
     const planetPathsRef = useRef([]);
     const frameIdRef = useRef(null);
-    const [timeStep, setTimeStep] = useState(1.397); // overall speed of orrery initialized at 0
+    // 1.4 timsStep = 1 day / frame
+    const [timeStep, setTimeStep] = useState(1.4);
     const [isPaused, setIsPaused] = useState(false); // pause state
 
     useEffect(() => {
@@ -120,10 +121,10 @@ const Orrery = () => {
 
         const animate = () => {
             if (!isPaused) {
-                system.updatePhysics(timeStep); // Update physics with a time step
+                system.updatePhysics(timeStep);
             }
             draw();
-            frameIdRef.current = requestAnimationFrame(animate); // Request next frame
+            frameIdRef.current = requestAnimationFrame(animate);
         };
 
         frameIdRef.current = requestAnimationFrame(animate);
@@ -147,12 +148,15 @@ const Orrery = () => {
                 height={window.innerHeight}
                 style={{ display: 'block', backgroundColor: 'black' }}
             />
-            <TimeControlButtons
-                timeStep={timeStep}
-                onTimeStepChange={handleTimeStepChange}
-                onTogglePause={togglePause}
-                isPaused={isPaused}
-            />
+            <div className="timeButtons">
+                <TimeControlButtons
+                    timeStep={timeStep}
+                    onTimeStepChange={handleTimeStepChange}
+                    onTogglePause={togglePause}
+                    isPaused={isPaused}
+                />
+            </div>
+            
         </>
     );
 };

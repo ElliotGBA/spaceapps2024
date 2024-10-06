@@ -1,20 +1,28 @@
 import React from 'react';
 
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { IoPause } from "react-icons/io5";
+import { IoPlay } from "react-icons/io5";
+
+
 const TimeControlButtons = ({ timeStep, onTimeStepChange, onTogglePause, isPaused }) => {
     const handleSlowBack = () => {
-        onTimeStepChange(timeStep * 1.2);
+        onTimeStepChange(timeStep - 0.4);
     };
 
     const handleFastBack = () => {
-        onTimeStepChange(timeStep * 2);
+        onTimeStepChange(timeStep - 1);
     };
 
     const handleSlowForward = () => {
-        onTimeStepChange(timeStep / 1.2);
+        onTimeStepChange(timeStep + 0.4);
     };
 
     const handleFastForward = () => {
-        onTimeStepChange(timeStep / 2);
+        onTimeStepChange(timeStep + 1);
     };
 
     const handlePausePlay = () => {
@@ -23,11 +31,11 @@ const TimeControlButtons = ({ timeStep, onTimeStepChange, onTogglePause, isPause
 
     return (
         <div className="timeControlButtons">
-            <button onClick={handleSlowBack}>Slow Back</button>
-            <button onClick={handleFastBack}>Fast Back</button>
-            <button onClick={handlePausePlay}>{isPaused ? 'Play' : 'Pause'}</button>
-            <button onClick={handleSlowForward}>Slow Forward</button>
-            <button onClick={handleFastForward}>Fast Forward</button>
+            <button onClick={handleFastBack}><MdKeyboardDoubleArrowLeft /></button>
+            <button onClick={handleSlowBack}><MdKeyboardArrowLeft /></button>
+            <button onClick={handlePausePlay}>{isPaused ? <IoPlay /> : <IoPause />}</button>
+            <button onClick={handleSlowForward}><MdKeyboardArrowRight /></button>
+            <button onClick={handleFastForward}><MdKeyboardDoubleArrowRight /></button>
         </div>
     );
 };
