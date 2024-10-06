@@ -1,18 +1,25 @@
 import React from "react";
-
+import NavBar from "./NavBar";
+import Footer from "./Footer";
+import "../scss/App.scss";
 
 function Home() {
     return (
         <div className="Home">
-            <header className="Home-header">
-                <section id="Home-banner">
-                    <h1 className="homeWelcome">Welcome Youniversers!</h1>
-                    /* Logo */?
-                </section>
-                
-            </header>
+            <div className="youniverse">
+                <nav className="Logo">
+                    <a href="/Home" title="Back to Home Page">
+                        <img src="https://img.freepik.com/free-vector/cute-helmet-astronaut-space-cartoon-vector-icon-illustration-science-technology-icon-isolated_138676-7378.jpg" alt='astronaut'></img>
+                    </a>
+                </nav>
+                <h1>Welcome Youniversers!</h1>
+            </div>
+            <NavBar />
+            <p>Content being here!</p>
+            <br></br>
+            <Footer />
         </div>
-    )
+    );
 }
 
 export default Home;

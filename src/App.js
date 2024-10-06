@@ -1,8 +1,8 @@
 import React from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import { AnimatedBackground } from 'animated-backgrounds';
-// import { useNavigate } from "react-router-dom";
+import { AnimatedBackground } from 'animated-backgrounds';
+import { useNavigate } from "react-router-dom";
 import "./scss/App.scss";
 
 import NavBar from "./Components/NavBar";
@@ -39,38 +39,55 @@ import Intro from "./Components/Intro";
 //     );
 // }
 
-function App() {
-  // const navigate = useNavigate();
-  //   const handleClick = () => {
-  //       navigate("/");
-  //   };
+// function App() {
+//   const navigate = useNavigate();
+//     const handleClick = () => {
+//         navigate("/Home");
+//     };
+//   return(
+//     <div>
+//       <Routes>
+//       <Route path="/" element={<Intro />} />
+//       {/* <Home /> */}
+//     </Routes>
+//     <Home />
+//     </div>
+    
+            // <div className="App">
+            //   <div className="youniverse">
+            //     <a href="" title="Back to Home Page">
+            //       <img src="https://img.freepik.com/free-vector/cute-helmet-astronaut-space-cartoon-vector-icon-illustration-science-technology-icon-isolated_138676-7378.jpg" alt='astronaut'></img>
+            //     </a>
+            //     <h1>Welcome Youniversers!</h1>
+            //   </div>
+            //     <NavBar />
+            //       <Routes>
+            //             <Route path="/" element={<Intro />} />
+            //             <Route path="/Home" element={<Home />} />
+            //             {/* <Route path="/Gravity" element={<Gravity />} /> */}
+            //             {/* <Route path="/More" element={<More />} /> */}
+            //       </Routes>
+            //       <Footer />
+            // </div>
+//   );
+// }
+function App(){
   return(
-    <div>
-      <Router>
-            <div className="App">
-              <div className="youniverse">
-                  <div><img src="https://img.freepik.com/free-vector/cute-helmet-astronaut-space-cartoon-vector-icon-illustration-science-technology-icon-isolated_138676-7378.jpg"></img></div>
-
-                      <h1>Welcome Youniversers!</h1>
-                  </div>
-                    <NavBar />
-                    <Routes>
-                        <Route path="/" element={<Intro / >} />
-                        <Route path="/Home" element={<Home />} />
-                        {/* <Route path="/Gravity" element={<Gravity />} /> */}
-                        {/* <Route path="/More" element={<More />} /> */}
-                    </Routes>
-                    <Footer />
-            </div>
-        </Router>
-  </div>
-
-
-
+    <Router>
+      <Routes>
+        <Route path="/" element={<Intro />} />
+        <Route path="/Home" element={<Home />} />
+      </Routes>
+    </Router>
   );
-  
-
-  
 }
 
 export default App;
+
+// export default function AppWrapper() {
+//   return (
+//     <Router>
+//       <App />
+//     </Router>
+//   );
+// }

@@ -1,6 +1,7 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import "../scss/_navbar.scss";
-// import "./scss/App.scss";
+import "../scss/App.scss";
 
 function NavBar() {
     return(
@@ -8,7 +9,7 @@ function NavBar() {
             <div className="navLinks">
                 <ul>
                     <li>
-                        <Link className="link" to="/App">
+                        <Link className="link" to="/Home">
                             Home
                         </Link>
                     </li>
@@ -26,7 +27,6 @@ function NavBar() {
             </div>
         </div>
     );
-
 }
 
 export default NavBar;
