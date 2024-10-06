@@ -190,6 +190,19 @@ const Orrery = () => {
         setSelectedPlanet(null); // Deselect the planet
     };
 
+    const handleUpdateMass = (planet, magnitudeChange) => {
+        // Update the mass in the System's planet list
+        const updatedPlanet = systemRef.current.bodies.find(
+            (body) => body.name === planet.name
+        );
+    
+        if (updatedPlanet) {
+            updatedPlanet.setMass(updatedPlanet.mass * Math.pow(10, magnitudeChange));
+            setSelectedPlanet({ ...updatedPlanet }); // Update the state with the new mass
+        }
+    };
+    
+
     return (
         <>
             <canvas
@@ -207,7 +220,7 @@ const Orrery = () => {
                 />
             </div>
             {selectedPlanet && (
-                <Popup planet={selectedPlanet} onClose={handleClosePopup} />
+                <Popup planet={selectedPlanet} onClose={handleClosePopup} onUpdateMass={handleUpdateMass} />
             )}
         </>
     );
