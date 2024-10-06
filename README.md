@@ -1,8 +1,8 @@
 # -=- Solar System Simulator -=-
-# for Nasa SpaceApps 2024
+### for Nasa SpaceApps 2024
 Built using React and Node.js
 
-# Built By:
+### Built By:
 Malk Daboor
 Michael Mroz
 Phuong Pham
