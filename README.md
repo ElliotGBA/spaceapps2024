@@ -1,4 +1,4 @@
-#-=- Solar System Simulator -=-
+# -=- Solar System Simulator -=-
 ##   for Nasa SpaceApps 2024
 Built using React and Node.js
 
