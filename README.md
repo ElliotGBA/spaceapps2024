@@ -26,8 +26,6 @@ This project is the collaborative effort of a talented team of developers:
   
 - **Dynamic Object Movement:** Witness the real-time movement of planets, moons, and other celestial bodies as they interact with one another.
 
-- **User-Friendly Interface:** Designed with a clean and intuitive interface, allowing users of all ages to easily navigate the simulation and explore the wonders of our solar system.
-
 ## Educational Purpose
 
 The Solar System Simulator is not just a tool for entertainment; it serves as an educational resource that fosters a greater appreciation for the complexity and beauty of our solar system. By allowing users to manipulate and observe various factors that influence celestial mechanics, the simulator helps illustrate the delicate balance that keeps our planet, and others, in their respective orbits around the Sun.
