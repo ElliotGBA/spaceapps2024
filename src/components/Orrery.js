@@ -52,40 +52,46 @@ const Orrery = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const system = systemRef.current;
-
+    
         // Adjust canvas resolution for device pixel ratio
         const dpr = window.devicePixelRatio || 1;
         canvas.width = window.innerWidth * dpr;
         canvas.height = window.innerHeight * dpr;
         ctx.scale(dpr, dpr);
-
+    
         // Initialize paths for each planet
         planetPathsRef.current = system.bodies.map(() => []);
-
+    
         const draw = () => {
             // Clear canvas with appropriate scaling
             ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
-
+    
+            // Update display properties based on index for scaling
+            system.bodies.forEach((body, index) => {
+                //body.updateDisplayProperties(index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
+                body.updateDisplayProperties(1000000);
+            });
+    
             // Draw the Sun
             const sunX = canvas.width / (2 * dpr);
             const sunY = canvas.height / (2 * dpr);
-            const sunRadius = system.centralBody.radius / 50000;
-
+            const sunRadius = system.centralBody.displayRadius / 50000;
+    
             ctx.beginPath();
             ctx.arc(sunX, sunY, sunRadius, 0, 2 * Math.PI);
             ctx.fillStyle = system.centralBody.colour;
             ctx.fill();
             ctx.closePath();
-
+    
             // Draw the orbital paths
             system.bodies.forEach((body, index) => {
                 const path = planetPathsRef.current[index];
-
+    
                 // Add the current position to the path
-                const planetX = sunX + body.position.x / (index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
-                const planetY = sunY + body.position.y / (index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
+                const planetX = sunX + body.displayPosition.x;
+                const planetY = sunY + body.displayPosition.y;
                 path.push({ x: planetX, y: planetY });
-
+    
                 // Draw the path
                 ctx.beginPath();
                 ctx.strokeStyle = body.colour;
@@ -97,20 +103,20 @@ const Orrery = () => {
                 ctx.stroke();
                 ctx.closePath();
             });
-
+    
             // Draw the planets and labels
-            system.bodies.forEach((body, index) => {
-                const planetX = sunX + body.position.x / (index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
-                const planetY = sunY + body.position.y / (index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
-                const planetRadius = body.radius / (index < 4 ? 1000 : 5000);
-
+            system.bodies.forEach((body) => {
+                const planetX = sunX + body.displayPosition.x;
+                const planetY = sunY + body.displayPosition.y;
+                const planetRadius = body.displayRadius / 1000;
+    
                 // Draw the planet
                 ctx.beginPath();
                 ctx.arc(planetX, planetY, planetRadius, 0, 2 * Math.PI);
                 ctx.fillStyle = body.colour;
                 ctx.fill();
                 ctx.closePath();
-
+    
                 // Draw the label
                 ctx.fillStyle = 'white';
                 ctx.font = '10px Arial';
@@ -118,7 +124,7 @@ const Orrery = () => {
                 ctx.fillText(body.name, planetX, planetY + planetRadius + 10);
             });
         };
-
+    
         const animate = () => {
             if (!isPaused) {
                 system.updatePhysics(timeStep);
@@ -126,9 +132,9 @@ const Orrery = () => {
             draw();
             frameIdRef.current = requestAnimationFrame(animate);
         };
-
+    
         frameIdRef.current = requestAnimationFrame(animate);
-
+    
         return () => cancelAnimationFrame(frameIdRef.current); // Clean up on unmount
     }, [timeStep, isPaused]); // Re-run effect if timeStep or isPaused changes
 

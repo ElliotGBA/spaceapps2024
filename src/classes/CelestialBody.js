@@ -1,3 +1,5 @@
+import { TiScissors } from "react-icons/ti";
+
 class CelestialBody {
 
     constructor(mass, position, velocity, acceleration, radius, colour, name, initialVelocityVector) {
@@ -9,6 +11,18 @@ class CelestialBody {
         this.colour = colour;
         this.name = name;
         this.initialVelocityVector = initialVelocityVector;
+
+        // display properties
+        this.displayPosition = {x: position.x, y: position.y };
+        this.displayRadius = radius;
+    }
+
+    updateDisplayProperties(scaleFactor) {
+        this.displayPosition = {
+            x: this.position.x / scaleFactor,
+            y: this.position.y / scaleFactor,
+        };
+        this.displayRadius = this.radius / (scaleFactor / 100000);
     }
 
     getPosition() {
