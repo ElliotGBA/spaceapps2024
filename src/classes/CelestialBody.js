@@ -1,4 +1,5 @@
 import { TiScissors } from "react-icons/ti";
+import { fetchParams } from '../api/planetDataApi';
 
 class CelestialBody {
 
@@ -35,7 +36,6 @@ class CelestialBody {
         this.position.y += this.velocity.vy * dt + 0.5 * this.acceleration.y * dt * dt;
 
     }
-    
 }
 
 function roundTo(n, digits) {
@@ -55,5 +55,4 @@ function roundTo(n, digits) {
     }
     return n;
 }
-
 export { CelestialBody };

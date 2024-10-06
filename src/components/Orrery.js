@@ -5,6 +5,8 @@ import planetData from "../data/startingPlanetData.json";
 import "../scss/Orrery.scss";
 import TimeControlButtons from './TimeControlButtons';
 
+
+
 const createSolarSystem = () => {
     const SunData = planetData.sun;
     const Sun = new CelestialBody(
@@ -20,7 +22,8 @@ const createSolarSystem = () => {
 
     const solarSystem = new System(Sun); // Initialize the solar system around the sun
 
-    planetData.planets.forEach((planet) => {
+    planetData.planets.forEach( (planet) => {
+
         const newPlanet = new CelestialBody(
             planet.mass,
             planet.position,
@@ -31,6 +34,7 @@ const createSolarSystem = () => {
             planet.name,
             planet.velocity
         );
+
         solarSystem.addBody(newPlanet);
     });
 
@@ -47,6 +51,29 @@ const Orrery = () => {
     // 1.4 timsStep = 1 day / frame
     const [timeStep, setTimeStep] = useState(1.4);
     const [isPaused, setIsPaused] = useState(false); // pause state
+    
+
+    //***temporary to test api
+    const [paramData, setParamData] = useState([]);
+
+    const getData = async () => {
+        const data = await fetchParams("Moon");
+        console.log("data is ", data);
+        setParamData(data);
+    }
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    useEffect(() => {
+        if ()
+    })
+
+    //****end of temporary code
+
+
+
 
     useEffect(() => {
         const canvas = canvasRef.current;

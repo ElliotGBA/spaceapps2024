@@ -20,7 +20,6 @@ server.get('/api', (req, res) => {
     .then((response) => {
         const data = response.data.result;
         const vectors = data.split("\n").filter((line) => containsStuff(line));
-        console.log(vectors[0]);
         res.send(vectors);
     })   
 }
