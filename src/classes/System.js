@@ -18,6 +18,7 @@ class System {
         }
     }
 
+    //sets planets onto correct orbits
     setInitialOrbitalVelocities() {
         this.bodies.forEach((body) => {
             const dx = body.position.x - this.centralBody.position.x;
