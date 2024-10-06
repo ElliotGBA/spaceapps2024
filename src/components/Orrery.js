@@ -5,9 +5,15 @@ import planetData from "../data/startingPlanetData.json";
 import "../scss/Orrery.scss";
 import TimeControlButtons from './TimeControlButtons';
 import Popup from './Popup'; // Import the Popup component
+import { MdOutlineRestartAlt } from "react-icons/md";
+
+// Deep clone the data to ensure fresh copies are used
+const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
 
 const createSolarSystem = () => {
-    const SunData = planetData.sun;
+    const initialData = deepClone(planetData);
+
+    const SunData = initialData.sun;
     const Sun = new CelestialBody(
         SunData.mass,
         SunData.position,
@@ -22,7 +28,7 @@ const createSolarSystem = () => {
 
     const solarSystem = new System(Sun);
 
-    planetData.planets.forEach((planet) => {
+    initialData.planets.forEach((planet) => {
         const newPlanet = new CelestialBody(
             planet.mass,
             planet.position,
@@ -50,6 +56,7 @@ const Orrery = () => {
     const [timeStep, setTimeStep] = useState(1.4);
     const [isPaused, setIsPaused] = useState(false);
     const [selectedPlanet, setSelectedPlanet] = useState(null);
+    const [systemVersion, setSystemVersion] = useState(0); // Track the version of the system
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -67,36 +74,36 @@ const Orrery = () => {
             const rect = canvas.getBoundingClientRect();
             const mouseX = (event.clientX - rect.left) * dpr;
             const mouseY = (event.clientY - rect.top) * dpr;
-        
+
             const sunX = canvas.width / (2 * dpr);
             const sunY = canvas.height / (2 * dpr);
             const sunRadius = system.centralBody.displayRadius / 1000; // Adjusted for scaling
-        
+
             let clickedOnPlanet = false; // Track if a planet or the Sun was clicked
-        
+
             // Check if the click was on any of the planets
             system.bodies.forEach((body) => {
                 const planetX = sunX + body.displayPosition.x;
                 const planetY = sunY + body.displayPosition.y;
                 const planetRadius = body.displayRadius / 1000;
-        
+
                 const distanceToPlanet = Math.sqrt(
                     (mouseX - planetX) ** 2 + (mouseY - planetY) ** 2
                 );
-        
+
                 // Check if the click was on the planet
                 if (distanceToPlanet <= planetRadius) {
                     setSelectedPlanet(body); // Set the selected planet
                     clickedOnPlanet = true; // A planet was clicked
                 }
             });
-        
+
             // Only check the Sun if no planets were clicked
             if (!clickedOnPlanet) {
                 const distanceToSun = Math.sqrt(
                     (mouseX - sunX) ** 2 + (mouseY - sunY) ** 2
                 );
-        
+
                 if (distanceToSun <= sunRadius) {
                     setSelectedPlanet(system.centralBody);
                 } else {
@@ -104,8 +111,6 @@ const Orrery = () => {
                 }
             }
         };
-        
-        
 
         canvas.addEventListener('mousedown', handleCanvasClick);
 
@@ -176,7 +181,7 @@ const Orrery = () => {
             cancelAnimationFrame(frameIdRef.current);
             canvas.removeEventListener('mousedown', handleCanvasClick);
         };
-    }, [timeStep, isPaused]);
+    }, [timeStep, isPaused, systemVersion]);
 
     const handleTimeStepChange = (newTimeStep) => {
         setTimeStep(newTimeStep);
@@ -195,13 +200,19 @@ const Orrery = () => {
         const updatedPlanet = systemRef.current.bodies.find(
             (body) => body.name === planet.name
         );
-    
+
         if (updatedPlanet) {
             updatedPlanet.setMass(updatedPlanet.mass * Math.pow(10, magnitudeChange));
             setSelectedPlanet({ ...updatedPlanet }); // Update the state with the new mass
         }
     };
-    
+
+    const handleRestart = () => {
+        setTimeStep(1.4);
+        systemRef.current = createSolarSystem(); // Create a new solar system using the original values
+        setSystemVersion((prev) => prev + 1); // Increment the version to force re-render
+        setSelectedPlanet(null);
+    };
 
     return (
         <>
@@ -219,6 +230,23 @@ const Orrery = () => {
                     isPaused={isPaused}
                 />
             </div>
+            <button
+                onClick={handleRestart}
+                style={{
+                    position: 'absolute',
+                    top: 20,
+                    right: 20,
+                    fontSize: '40px',
+                    color: "white",
+                    cursor: 'pointer',
+                    border: "none",
+                    textAlign: "center",
+                    backgroundColor: "none",
+                    background: "none",
+                }}
+            >
+                <MdOutlineRestartAlt />
+            </button>
             {selectedPlanet && (
                 <Popup planet={selectedPlanet} onClose={handleClosePopup} onUpdateMass={handleUpdateMass} />
             )}
