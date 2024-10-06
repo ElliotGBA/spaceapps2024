@@ -9,6 +9,7 @@ import { MdOutlineRestartAlt } from "react-icons/md";
 
 // Deep clone the data to ensure fresh copies are used
 const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
+//import { fetchParams } from '../api/planetDataApi';
 
 const createSolarSystem = () => {
     const initialData = deepClone(planetData);
@@ -40,6 +41,7 @@ const createSolarSystem = () => {
             planet.velocity,
             planet.funFact
         );
+
         solarSystem.addBody(newPlanet);
     });
 
@@ -47,6 +49,7 @@ const createSolarSystem = () => {
 
     return solarSystem;
 }
+
 
 const Orrery = () => {
     const canvasRef = useRef(null);
@@ -57,6 +60,27 @@ const Orrery = () => {
     const [isPaused, setIsPaused] = useState(false);
     const [selectedPlanet, setSelectedPlanet] = useState(null);
     const [systemVersion, setSystemVersion] = useState(0); // Track the version of the system
+    
+    //const [paramData, setParamData] = useState([]);
+
+    /*
+    Code snippet that would be used to get x, y, vx, vy parameters for a celestialBody
+    If we had more time, this would be incorporated to fetch data for each celestialBody
+    in our Solar System. 
+    fetchParams function sends a GET request to our backend's API route, which then sends
+    those parameters to the NASA Horizons api.
+
+    useEffect(() => {
+        const getData = async() => {
+            return await fetchParams("Earth");
+        }
+        getData().then( res => {
+            //paramData contains (x, y, vx, vy);
+            setParamData(res);
+        });
+    }, []);
+    
+    */
 
     useEffect(() => {
         const canvas = canvasRef.current;

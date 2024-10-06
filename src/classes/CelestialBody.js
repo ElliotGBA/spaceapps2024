@@ -38,7 +38,12 @@ class CelestialBody {
     setMass(newMass) {
         this.mass = newMass;
     }
-    
+
+    setMass(newMass) {
+        this.mass = newMass;
+    }
+
+
 }
 
 function roundTo(n, digits) {
@@ -58,5 +63,4 @@ function roundTo(n, digits) {
     }
     return n;
 }
-
 export { CelestialBody };
