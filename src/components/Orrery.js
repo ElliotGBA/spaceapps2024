@@ -62,6 +62,42 @@ const Orrery = () => {
     
         // Initialize paths for each planet
         planetPathsRef.current = system.bodies.map(() => []);
+
+        const handleCanvasClick = (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = (event.clientX - rect.left) * dpr;
+            const mouseY = (event.clientY - rect.top) * dpr;
+
+            const sunX = canvas.width / (2 * dpr);
+            const sunY = canvas.height / (2 * dpr);
+
+            // Check if the click was on the Sun
+            const sunRadius = system.centralBody.displayRadius / 50000;
+            const distanceToSun = Math.sqrt(
+                (mouseX - sunX) ** 2 + (mouseY - sunY) ** 2
+            );
+            if (distanceToSun <= sunRadius) {
+                console.log(`Clicked on the Sun: ${system.centralBody.name}`);
+                return;
+            }
+
+                // Check if the click was on any of the planets
+                system.bodies.forEach((body) => {
+                    const planetX = sunX + body.displayPosition.x;
+                    const planetY = sunY + body.displayPosition.y;
+                    const planetRadius = body.displayRadius / 1000;
+
+                    const distanceToPlanet = Math.sqrt(
+                        (mouseX - planetX) ** 2 + (mouseY - planetY) ** 2
+                    );
+
+                    if (distanceToPlanet <= planetRadius) {
+                        console.log(`Clicked on planet: ${body.name}`);
+                    }
+                });
+            };
+
+            canvas.addEventListener('mousedown', handleCanvasClick);
     
         const draw = () => {
             // Clear canvas with appropriate scaling
@@ -133,36 +169,13 @@ const Orrery = () => {
             draw();
             frameIdRef.current = requestAnimationFrame(animate);
         };
-
-        const handleCanvasClick = (event) => {
-            const rect = canvas.getBoundingClientRect();
-            const mouseX = (event.clientX - rect.left) * dpr;
-            const mouseY = (event.clientY - rect.top) * dpr;
-            const sunX = canvas.width / (2 * dpr);
-            const sunY = canvas.height / (2 * dpr);
-
-            // Check if Sun is clicked
-            const sunRadius = system.centralBody.displayRadius / 50000;
-            const distToSun = Math.sqrt((mouseX - sunX) ** 2 + (mouseY - sunY) ** 2);
-            if (distToSun <= sunRadius) {
-                console.log(`Clicked on ${system.centralBody.name}`);
-            }
-
-            // Check if any planet is clicked
-            system.bodies.forEach((body) => {
-                const planetX = sunX + body.displayPosition.x;
-                const planetY = sunY + body.displayPosition.y;
-                const planetRadius = body.displayRadius / 1000;
-                const distance = Math.sqrt((mouseX - planetX) ** 2 + (mouseY - planetY) ** 2);
-                if (distance <= planetRadius) {
-                    console.log(`Clicked on ${body.name}`);
-                }
-            });
-        };
     
         frameIdRef.current = requestAnimationFrame(animate);
     
-        return () => cancelAnimationFrame(frameIdRef.current); // Clean up on unmount
+        return () => {
+            cancelAnimationFrame(frameIdRef.current);
+            canvas.removeEventListener('mousedown', handleCanvasClick);
+        };
     }, [timeStep, isPaused]); // Re-run effect if timeStep or isPaused changes
 
     const handleTimeStepChange = (newTimeStep) => {
