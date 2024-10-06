@@ -41,28 +41,32 @@ const getFromBackEnd = async (bodyName, targetDate) => {
      targetDate = targetDate ? targetDate : `${year}-${month}-${day + 1}` 
     //end of temporary code
 
-    /*data needed:
-        vX, vY, position (x, y);
-    */
-    const getData = axios.get(url, {
-        params: {
-            format: "json",
-            CENTER: "@10",
-            COMMAND: BODY_CODES[bodyName],
-            OBJ_DATA: "YES",
-            MAKE_EPHEM: "YES",
-            EPHEM_TYPE: "VECTORS",
-            START_TIME: `${year}-${month}-${day}`,
-            STOP_TIME: targetDate,
-            STEP_SIZE: "1d",
-        },
-    }).then((response) => {
-        //returns 4 lines containing x, y, vx, vy, coords
-        return response.data;
-    }).catch((error) => {
-        console.error("error from backend is: ", error)
-    })
-    return getData;
+    const getData = async (bodyName) => {
+  
+        try {
+            const response = await axios.get(url, {
+                params: {
+                    format: "json",
+                    CENTER: "@10",
+                    COMMAND: BODY_CODES[bodyName],
+                    OBJ_DATA: "YES",
+                    MAKE_EPHEM: "YES",
+                    EPHEM_TYPE: "VECTORS",
+                    START_TIME: `${year}-${month}-${day}`,
+                    STOP_TIME: targetDate,
+                    STEP_SIZE: "1d",
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Error from backend is: ", error);
+            return;
+        }
+    };
+    
+    const data = await getData(bodyName);
+    console.log("after calling getData in getfromBackend, data is ", data)
+    return data;
 }
 
 /* 
@@ -70,7 +74,6 @@ const getFromBackEnd = async (bodyName, targetDate) => {
 * at a given date
 */
 export const fetchParams = async (bodyName, targetDate) => {
-    console.log("fetch params called!")
     const data = await getFromBackEnd(bodyName, targetDate);
     /*data elements are strings containing: 
         [ startDate xyz,
@@ -79,8 +82,14 @@ export const fetchParams = async (bodyName, targetDate) => {
           endDate vx vy vz
         ]
     */  
-   
-    if (data.length !== 4) {
+   console.log("in fetch param, data is ", data)
+    if (!data) {
+        console.error("error");
+        return;
+    }
+
+    if ( data.length !== 4) {
+        
         console.error("Error: Data returned in incorrect format.")
         return;
     }

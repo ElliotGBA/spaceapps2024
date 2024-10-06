@@ -1,4 +1,5 @@
 import { CelestialBody } from "./CelestialBody";
+import { fetchParams } from "../api/planetDataApi";
 
 class System {
     constructor(centralBody) {

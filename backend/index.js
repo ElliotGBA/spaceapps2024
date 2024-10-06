@@ -19,6 +19,7 @@ server.get('/api', (req, res) => {
     })
     .then((response) => {
         const data = response.data.result;
+        console.log("data returned from nasa is ", data);
         const vectors = data.split("\n").filter((line) => containsStuff(line));
         res.send(vectors);
     })   

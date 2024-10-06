@@ -4,8 +4,7 @@ import { CelestialBody } from '../classes/CelestialBody';
 import planetData from "../data/startingPlanetData.json";
 import "../scss/Orrery.scss";
 import TimeControlButtons from './TimeControlButtons';
-
-
+//import { fetchParams } from '../api/planetDataApi';
 
 const createSolarSystem = () => {
     const SunData = planetData.sun;
@@ -39,9 +38,9 @@ const createSolarSystem = () => {
     });
 
     solarSystem.setInitialOrbitalVelocities(); // Set initial velocities for orbital movement
-
     return solarSystem;
 }
+
 
 const Orrery = () => {
     const canvasRef = useRef(null);
@@ -52,40 +51,36 @@ const Orrery = () => {
     const [timeStep, setTimeStep] = useState(1.4);
     const [isPaused, setIsPaused] = useState(false); // pause state
     
+    //const [paramData, setParamData] = useState([]);
 
-    //***temporary to test api
-    const [paramData, setParamData] = useState([]);
-
-    const getData = async () => {
-        const data = await fetchParams("Moon");
-        console.log("data is ", data);
-        setParamData(data);
-    }
+    /*
+    Code snippet that would be used to get x, y, vx, vy parameters for a celestialBody
+    If we had more time, this would be incorporated to fetch data for each celestialBody
+    in our Solar System. 
+    fetchParams function sends a GET request to our backend's API route, which then sends
+    those parameters to the NASA Horizons api.
 
     useEffect(() => {
-        getData();
+        const getData = async() => {
+            return await fetchParams("Earth");
+        }
+        getData().then( res => {
+            //paramData contains (x, y, vx, vy);
+            setParamData(res);
+        });
     }, []);
-
-    useEffect(() => {
-        if ()
-    })
-
-    //****end of temporary code
-
-
-
+    
+    */
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-        const system = systemRef.current;
-    
+        const system = systemRef.current;    
         // Adjust canvas resolution for device pixel ratio
         const dpr = window.devicePixelRatio || 1;
         canvas.width = window.innerWidth * dpr;
         canvas.height = window.innerHeight * dpr;
         ctx.scale(dpr, dpr);
-    
         // Initialize paths for each planet
         planetPathsRef.current = system.bodies.map(() => []);
     
@@ -130,6 +125,7 @@ const Orrery = () => {
                 ctx.stroke();
                 ctx.closePath();
             });
+            
     
             // Draw the planets and labels
             system.bodies.forEach((body) => {
