@@ -4,38 +4,40 @@ import { CelestialBody } from '../classes/CelestialBody';
 import planetData from "../data/startingPlanetData.json";
 import "../scss/Orrery.scss";
 import TimeControlButtons from './TimeControlButtons';
+import Popup from './Popup'; // Import the Popup component
 
 const createSolarSystem = () => {
-
     const SunData = planetData.sun;
     const Sun = new CelestialBody(
         SunData.mass,
         SunData.position,
         SunData.velocity,
-        { x: 0, y: 0 }, // initial acceleration is 0
+        { x: 0, y: 0 },
         SunData.radius,
         SunData.color,
         SunData.name,
         SunData.velocity,
+        SunData.funFact,
     );
 
-    const solarSystem = new System(Sun); // Initialize the solar system around the sun
+    const solarSystem = new System(Sun);
 
     planetData.planets.forEach((planet) => {
         const newPlanet = new CelestialBody(
             planet.mass,
             planet.position,
-            { x: 0, y: 0 }, // Initial velocity is set later
+            { x: 0, y: 0 },
             { x: 0, y: 0 },
             planet.radius,
             planet.color,
             planet.name,
-            planet.velocity
+            planet.velocity,
+            planet.funFact
         );
         solarSystem.addBody(newPlanet);
     });
 
-    solarSystem.setInitialOrbitalVelocities(); // Set initial velocities for orbital movement
+    solarSystem.setInitialOrbitalVelocities();
 
     return solarSystem;
 }
@@ -45,91 +47,92 @@ const Orrery = () => {
     const systemRef = useRef(createSolarSystem());
     const planetPathsRef = useRef([]);
     const frameIdRef = useRef(null);
-    // 1.4 timsStep = 1 day / frame
     const [timeStep, setTimeStep] = useState(1.4);
-    const [isPaused, setIsPaused] = useState(false); // pause state
+    const [isPaused, setIsPaused] = useState(false);
+    const [selectedPlanet, setSelectedPlanet] = useState(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const system = systemRef.current;
-    
-        // Adjust canvas resolution for device pixel ratio
+
         const dpr = window.devicePixelRatio || 1;
         canvas.width = window.innerWidth * dpr;
         canvas.height = window.innerHeight * dpr;
         ctx.scale(dpr, dpr);
-    
-        // Initialize paths for each planet
+
         planetPathsRef.current = system.bodies.map(() => []);
 
         const handleCanvasClick = (event) => {
             const rect = canvas.getBoundingClientRect();
             const mouseX = (event.clientX - rect.left) * dpr;
             const mouseY = (event.clientY - rect.top) * dpr;
-
+        
             const sunX = canvas.width / (2 * dpr);
             const sunY = canvas.height / (2 * dpr);
-
-            // Check if the click was on the Sun
-            const sunRadius = system.centralBody.displayRadius / 50000;
-            const distanceToSun = Math.sqrt(
-                (mouseX - sunX) ** 2 + (mouseY - sunY) ** 2
-            );
-            if (distanceToSun <= sunRadius) {
-                console.log(`Clicked on the Sun: ${system.centralBody.name}`);
-                return;
+            const sunRadius = system.centralBody.displayRadius / 1000; // Adjusted for scaling
+        
+            let clickedOnPlanet = false; // Track if a planet or the Sun was clicked
+        
+            // Check if the click was on any of the planets
+            system.bodies.forEach((body) => {
+                const planetX = sunX + body.displayPosition.x;
+                const planetY = sunY + body.displayPosition.y;
+                const planetRadius = body.displayRadius / 1000;
+        
+                const distanceToPlanet = Math.sqrt(
+                    (mouseX - planetX) ** 2 + (mouseY - planetY) ** 2
+                );
+        
+                // Check if the click was on the planet
+                if (distanceToPlanet <= planetRadius) {
+                    setSelectedPlanet(body); // Set the selected planet
+                    clickedOnPlanet = true; // A planet was clicked
+                }
+            });
+        
+            // Only check the Sun if no planets were clicked
+            if (!clickedOnPlanet) {
+                const distanceToSun = Math.sqrt(
+                    (mouseX - sunX) ** 2 + (mouseY - sunY) ** 2
+                );
+        
+                if (distanceToSun <= sunRadius) {
+                    setSelectedPlanet(system.centralBody);
+                } else {
+                    setSelectedPlanet(null); // Close popup if clicked outside any celestial body
+                }
             }
+        };
+        
+        
 
-                // Check if the click was on any of the planets
-                system.bodies.forEach((body) => {
-                    const planetX = sunX + body.displayPosition.x;
-                    const planetY = sunY + body.displayPosition.y;
-                    const planetRadius = body.displayRadius / 1000;
+        canvas.addEventListener('mousedown', handleCanvasClick);
 
-                    const distanceToPlanet = Math.sqrt(
-                        (mouseX - planetX) ** 2 + (mouseY - planetY) ** 2
-                    );
-
-                    if (distanceToPlanet <= planetRadius) {
-                        console.log(`Clicked on planet: ${body.name}`);
-                    }
-                });
-            };
-
-            canvas.addEventListener('mousedown', handleCanvasClick);
-    
         const draw = () => {
-            // Clear canvas with appropriate scaling
             ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
-    
-            // Update display properties based on index for scaling
+
             system.bodies.forEach((body, index) => {
-                //body.updateDisplayProperties(index < 4 ? 2500000 : (index < 6 ? 6000000 : 10000000));
                 body.updateDisplayProperties(index < 4 ? 2500000 : (index < 6 ? 6000000 : 8000000));
             });
-    
-            // Draw the Sun
+
             const sunX = canvas.width / (2 * dpr);
             const sunY = canvas.height / (2 * dpr);
             const sunRadius = system.centralBody.displayRadius / 50000;
-    
+
             ctx.beginPath();
             ctx.arc(sunX, sunY, sunRadius, 0, 2 * Math.PI);
             ctx.fillStyle = system.centralBody.colour;
             ctx.fill();
             ctx.closePath();
-    
-            // Draw the orbital paths
+
             system.bodies.forEach((body, index) => {
                 const path = planetPathsRef.current[index];
-    
-                // Add the current position to the path
+
                 const planetX = sunX + body.displayPosition.x;
                 const planetY = sunY + body.displayPosition.y;
                 path.push({ x: planetX, y: planetY });
-    
-                // Draw the path
+
                 ctx.beginPath();
                 ctx.strokeStyle = body.colour;
                 ctx.lineWidth = 0.5;
@@ -140,28 +143,25 @@ const Orrery = () => {
                 ctx.stroke();
                 ctx.closePath();
             });
-    
-            // Draw the planets and labels
+
             system.bodies.forEach((body) => {
                 const planetX = sunX + body.displayPosition.x;
                 const planetY = sunY + body.displayPosition.y;
                 const planetRadius = body.displayRadius / 1000;
-    
-                // Draw the planet
+
                 ctx.beginPath();
                 ctx.arc(planetX, planetY, planetRadius, 0, 2 * Math.PI);
                 ctx.fillStyle = body.colour;
                 ctx.fill();
                 ctx.closePath();
-    
-                // Draw the label
+
                 ctx.fillStyle = 'white';
                 ctx.font = '10px Arial';
                 ctx.textAlign = 'center';
                 ctx.fillText(body.name, planetX, planetY + planetRadius + 10);
             });
         };
-    
+
         const animate = () => {
             if (!isPaused) {
                 system.updatePhysics(timeStep);
@@ -169,14 +169,14 @@ const Orrery = () => {
             draw();
             frameIdRef.current = requestAnimationFrame(animate);
         };
-    
+
         frameIdRef.current = requestAnimationFrame(animate);
-    
+
         return () => {
             cancelAnimationFrame(frameIdRef.current);
             canvas.removeEventListener('mousedown', handleCanvasClick);
         };
-    }, [timeStep, isPaused]); // Re-run effect if timeStep or isPaused changes
+    }, [timeStep, isPaused]);
 
     const handleTimeStepChange = (newTimeStep) => {
         setTimeStep(newTimeStep);
@@ -186,13 +186,8 @@ const Orrery = () => {
         setIsPaused((prev) => !prev);
     };
 
-    const changeBodyMass = (bodyName, newMass) => {
-        const system = systemRef.current;
-        const body = system.bodies.find((b) => b.name === bodyName);
-        if (body) {
-            body.setMass(newMass);
-            console.log(`${body.name} mass updated to ${newMass}`);
-        }
+    const handleClosePopup = () => {
+        setSelectedPlanet(null); // Deselect the planet
     };
 
     return (
@@ -211,7 +206,9 @@ const Orrery = () => {
                     isPaused={isPaused}
                 />
             </div>
-            {/*<button onClick={() => changeBodyMass("Earth", 6e28)}>Change Earth's Mass</button>*/}
+            {selectedPlanet && (
+                <Popup planet={selectedPlanet} onClose={handleClosePopup} />
+            )}
         </>
     );
 };

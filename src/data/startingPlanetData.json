@@ -5,7 +5,8 @@
       "position": { "x": 0, "y": 0 },
       "velocity": { "vx": 0, "vy": 0 },
       "radius": 696340,
-      "color": "#FFD700"
+      "color": "#FFD700",
+      "funFact": "Our sun is actually medium sized in comparison to other stars, it is not that big."
     },
     "planets": [
       {
@@ -14,7 +15,8 @@
         "position": { "x": 57909050, "y": 0 },
         "velocity": { "vx": 0, "vy": 47.87 },
         "radius": 2439.7,
-        "color": "#A9A9A9"
+        "color": "#A9A9A9",
+        "funFact": "Mercury has a crater named after Dr. Seuss."
       },
       {
         "name": "Venus",
@@ -22,7 +24,8 @@
         "position": { "x": 108208000, "y": 0 },
         "velocity": { "vx": 0, "vy": 35.02 },
         "radius": 6051.8,
-        "color": "#EEDC82"
+        "color": "#EEDC82",
+        "funFact": "A day on Venus is longer than a year on Earth."
       },
       {
         "name": "Earth",
@@ -30,7 +33,8 @@
         "position": { "x": 149598023, "y": 0 },
         "velocity": { "vx": 0, "vy": 29.78 },
         "radius": 6371,
-        "color": "#1E90FF"
+        "color": "#1E90FF",
+        "funFact": "You live here."
       },
       {
         "name": "Mars",
@@ -38,7 +42,8 @@
         "position": { "x": 227939200, "y": 0 },
         "velocity": { "vx": 0, "vy": 24.07 },
         "radius": 3389.5,
-        "color": "#FF4500"
+        "color": "#FF4500",
+        "funFact": "Mars has very weak gravity so you can jump 3 times higher on Mars than on Earth."
       },
       {
         "name": "Jupiter",
@@ -46,7 +51,8 @@
         "position": { "x": 778340821, "y": 0 },
         "velocity": { "vx": 0, "vy": 13.07 },
         "radius": 69911,
-        "color": "#FFA500"
+        "color": "#FFA500",
+        "funFact": "Jupiter can fit 1,000 Earths inside it."
       },
       {
         "name": "Saturn",
@@ -54,7 +60,8 @@
         "position": { "x": 1426666422, "y": 0 },
         "velocity": { "vx": 0, "vy": 9.69 },
         "radius": 58232,
-        "color": "#F5DEB3"
+        "color": "#F5DEB3",
+        "funFact": "One day on Saturn is 10.7 hours, but one year on Saturn is 29 years."
       },
       {
         "name": "Uranus",
@@ -62,7 +69,8 @@
         "position": { "x": 2870658186, "y": 0 },
         "velocity": { "vx": 0, "vy": 6.81 },
         "radius": 25362,
-        "color": "#AFEEEE"
+        "color": "#AFEEEE",
+        "funFact": "Uranus's moons are named after characters from William Shakespeare and Alexander Pope."
       },
       {
         "name": "Neptune",
@@ -70,7 +78,8 @@
         "position": { "x": 4498396441, "y": 0 },
         "velocity": { "vx": 0, "vy": 5.43 },
         "radius": 24622,
-        "color": "#4682B4"
+        "color": "#4682B4",
+        "funFact": "Neptune has 14 known moons."
       }
     ]
   }
