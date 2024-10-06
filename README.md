@@ -1,13 +1,33 @@
-# -=- Solar System Simulator -=-
-### for Nasa SpaceApps 2024
-Built using React and Node.js
+# Solar System Simulator
 
-### Built By:
-- Malk Daboor
-- Michael Mroz
-- Phuong Pham
-- Truc Tran
-- Elliot Boutilier-Anderson
+Welcome to the **Solar System Simulator**, an innovative project developed for NASA SpaceApps 2024. This application aims to provide an engaging and educational experience that showcases the intricate dynamics of our solar system.
 
-A sandbox simulation of the solar system featuring time stepping, gravity simulations between all celestial bodies, mass and velocity shifting and movement of any and all objects.
-Meant to give a greater appreciation for how beautiful the balance of our solar system is, and how delicately our planet lies among the gravity of our star.
+## Overview
+
+The Solar System Simulator is a sandbox simulation built using **React** for the frontend and **Node.js** for the backend. It offers users the ability to explore the celestial bodies of our solar system through realistic gravitational interactions, time-stepping simulations, and the manipulation of various parameters such as mass and velocity. This immersive experience is designed to enhance our understanding of the delicate balance that governs our cosmic neighborhood.
+
+## Team
+
+This project is the collaborative effort of a talented team of developers:
+
+- **Malk Daboor**
+- **Michael Mroz**
+- **Phuong Pham**
+- **Truc Tran**
+- **Elliot Boutilier-Anderson**
+
+## Features
+
+- **Time Stepping:** Experience the passage of time in the solar system at various speeds, allowing for a deeper understanding of planetary orbits and interactions.
+  
+- **Gravity Simulations:** Visualize the gravitational forces at play between celestial bodies, showcasing how mass and distance influence their movements.
+  
+- **Mass and Velocity Shifting:** Modify the mass and velocity of any object in the simulation to observe the resulting changes in orbits and interactions.
+  
+- **Dynamic Object Movement:** Witness the real-time movement of planets, moons, and other celestial bodies as they interact with one another.
+
+- **User-Friendly Interface:** Designed with a clean and intuitive interface, allowing users of all ages to easily navigate the simulation and explore the wonders of our solar system.
+
+## Educational Purpose
+
+The Solar System Simulator is not just a tool for entertainment; it serves as an educational resource that fosters a greater appreciation for the complexity and beauty of our solar system. By allowing users to manipulate and observe various factors that influence celestial mechanics, the simulator helps illustrate the delicate balance that keeps our planet, and others, in their respective orbits around the Sun.
