@@ -10,8 +10,8 @@ import "./scss/App.scss";
 
 // import NavBar from "./Components/NavBar";
 // import Footer from "./Components/Footer";
-import Home from "./Components/Home";
-import Intro from "./Components/Intro";
+import Home from "./components/Home";
+import Intro from "./components/Intro";
 
 function App() {
 
