@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import Orrery from "./Orrery";
+import Orrery from "../components/Orrery";
 import "../scss/App.scss";
 
 function Home() {
